@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  // Solo aceptar solicitudes POST
+  // Solo aceptar POST
   if (req.method !== 'POST') {
     return res.status(405).json({
       error: 'Método no permitido'
@@ -7,18 +7,41 @@ export default async function handler(req, res) {
   }
 
   try {
-    const {
-      nombre,
-      email,
-      whatsapp,
-      interes,
-      autorizacion
-    } = req.body;
+    console.log('Datos recibidos:', req.body);
 
-    // Validar campos obligatorios
+    // Aceptar diferentes nombres posibles enviados por el formulario
+    const nombre =
+      req.body.nombre ||
+      req.body.name ||
+      req.body.fullName;
+
+    const email =
+      req.body.email ||
+      req.body.correo ||
+      req.body.correo_electronico;
+
+    const whatsapp =
+      req.body.whatsapp ||
+      req.body.WhatsApp ||
+      req.body.telefono ||
+      null;
+
+    const interes =
+      req.body.interes ||
+      req.body['Área de Interés'] ||
+      req.body.areaInteres ||
+      null;
+
+    const autorizacion =
+      req.body.autorizacion ||
+      req.body.data_auth ||
+      false;
+
+    // Validar
     if (!nombre || !email) {
       return res.status(400).json({
-        error: 'Faltan campos obligatorios'
+        error: 'Faltan campos obligatorios',
+        recibido: req.body
       });
     }
 
@@ -36,9 +59,9 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           nombre: nombre,
           correo_electronico: email,
-          whatsapp: whatsapp || null,
-          interes: interes || null,
-          data_auth: autorizacion || false
+          whatsapp: whatsapp,
+          interes: interes,
+          data_auth: autorizacion
         })
       }
     );
@@ -49,7 +72,10 @@ export default async function handler(req, res) {
       console.error('Error Supabase:', data);
 
       return res.status(response.status).json({
-        error: data.message || data.error || 'Error al guardar el registro'
+        error:
+          data.message ||
+          data.error ||
+          'Error al guardar el registro'
       });
     }
 
