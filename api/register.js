@@ -11,14 +11,16 @@ export default async function handler(req, res) {
 
     // Aceptar diferentes nombres posibles enviados por el formulario
     const nombre =
-      req.body.nombre ||
-      req.body.name ||
-      req.body.fullName;
+  req.body.firstName ||
+  req.body.name ||
+  req.body.nombre ||
+  req.body.full_name ||
+  req.body.fullName;
 
-    const email =
-      req.body.email ||
-      req.body.correo ||
-      req.body.correo_electronico;
+const email =
+  req.body.email ||
+  req.body.correo ||
+  req.body.correo_electronico;
 
     const whatsapp =
       req.body.whatsapp ||
