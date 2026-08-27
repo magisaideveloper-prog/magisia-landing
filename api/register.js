@@ -59,12 +59,12 @@ const email =
           'Prefer': 'return=representation'
         },
         body: JSON.stringify({
-          nombre: nombre,
-          correo_electronico: email,
-          whatsapp: whatsapp,
-          interes: interes,
-          data_auth: autorizacion
-        })
+  nombre: nombre,
+  email: email,
+  whatsapp: whatsapp,
+  interes: interest,
+  data_auth: dataAuth
+})
       }
     );
 
