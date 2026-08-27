@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magis AI Academi1 | Domina la IA en Producción Real</title>
+    <meta name="description"
+        content="Aprende a diseñar, escalar y desplegar agentes de IA y sistemas de nivel producción. De la teoría a la implementación real con expertos de la industria.">
+    <!-- Google Fonts: Outfit for headers, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            200: '#c7d2fe',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#0052FF',
+                            600: '#4338ca',
+                            700: '#3730a3',
+                            800: '#312e81',
+                            900: '#1e1b4b',
+                            950: '#0a0a1f',
+                        },
+                        dark: {
+                            950: '#03050c',
+                            900: '#050914',
+                            800: '#0a0f1d',
+                            700: '#111827',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Outfit', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent),
+                radial-gradient(circle at bottom left, rgba(76, 29, 149, 0.1), transparent);
+        }
+
+        .text-gradient {
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.5);
+        }
+
+        .error-message {
+            display: none;
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        input.invalid {
+            border-color: #ef4444;
+        }
+
+        input.invalid+.error-message {
+            display: block;
+        }
+    </style>
+    <!-- Microsoft Clarity -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "wdsn47ps3p");
+    </script>
+</head>
+
+<body class="bg-dark-900 text-slate-200 font-sans selection:bg-brand-500 selection:text-white">
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 glass border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="https://magis-ai.io" class="flex items-center space-x-2 group">
+                <div
+                    class="w-10 h-10 bg-brand-500 rounded-xl flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-110 transition-transform">
+                    <i data-lucide="zap" class="text-white"></i>
+                </div>
+                <span class="text-xl font-display font-bold tracking-tight text-white">Magis <span
+                        class="text-brand-500 text-2xl">AI</span> Academy</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#benefits" class="hover:text-brand-400 transition-colors">Beneficios</a>
+                <a href="#courses" class="hover:text-brand-400 transition-colors">Cursos</a>
+                <a href="#register"
+                    class="bg-brand-500 hover:bg-brand-600 text-white px-6 py-2.5 rounded-full transition-all shadow-lg shadow-brand-500/25 active:scale-95">Comenzar
+                    Ahora</a>
+            </div>
+            <button class="md:hidden text-slate-300">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden hero-gradient">
+        <!-- Floating Elements Background -->
+        <div class="absolute top-1/4 -left-20 w-96 h-96 bg-brand-600/10 rounded-full blur-[120px] animate-pulse-slow">
+        </div>
+        <div
+            class="absolute bottom-1/4 -right-20 w-80 h-80 bg-blue-600/10 rounded-full blur-[100px] animate-pulse-slow">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left space-y-8 relative z-10">
+                    <div
+                        class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-xs font-semibold uppercase tracking-wider mb-2">
+                        <span class="relative flex h-2 w-2">
+                            <span
+                                class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                        </span>
+                        <span>Inscripciones Abiertas 2026</span>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-display font-extrabold text-white leading-tight">
+                        Domina la <span class="text-brand-500">IA</span> que Escala en Producción Real
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Domina el "Vibe Coding" y la orquestación de agentes autónomos. Formamos a los líderes y desarrolladores que están escalando la IA en corporativos globales y startups de alto impacto. No enseñamos teoría, enseñamos lo que implementamos.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="#register"
+                            class="w-full sm:w-auto bg-brand-500 hover:bg-brand-600 text-white px-8 py-4 rounded-2xl font-bold text-lg shadow-2xl shadow-brand-500/30 transition-all hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2">
+                            Empieza Gratis <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                    <div class="flex items-center justify-center lg:justify-start space-x-4 pt-4">
+                        <div class="flex -space-x-3">
+                            <img src="https://i.pravatar.cc/100?img=1"
+                                class="w-10 h-10 rounded-full border-2 border-dark-900" alt="Student">
+                            <img src="https://i.pravatar.cc/100?img=2"
+                                class="w-10 h-10 rounded-full border-2 border-dark-900" alt="Student">
+                            <img src="https://i.pravatar.cc/100?img=3"
+                                class="w-10 h-10 rounded-full border-2 border-dark-900" alt="Student">
+                        </div>
+                        <p class="text-sm text-slate-500 font-medium">+5,000 profesionales ya se están capacitando</p>
+                    </div>
+                </div>
+                <div class="relative lg:block">
+                    <div class="relative z-10 glass p-4 rounded-3xl animate-float shadow-2xl overflow-hidden">
+                        <!-- Hero Image from artifact directory will be linked here -->
+                        <img src="assets/img/hero_ai_learning.png" alt="AI Mastery Visualization"
+                            class="rounded-2xl shadow-lg w-full h-auto object-cover aspect-video lg:aspect-auto">
+                        <div class="absolute top-8 left-8 p-4 glass rounded-2xl border border-white/10 hidden md:block">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-green-500/20 p-2 rounded-lg">
+                                    <i data-lucide="trending-up" class="text-green-500 w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-slate-400 uppercase font-bold">Salario Promedio IA</p>
+                                    <p class="text-white font-bold leading-none">$120k / año</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-brand-600/20 blur-3xl -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="py-24 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center space-y-4 mb-20">
+                <h2 class="text-brand-500 font-bold uppercase tracking-widest text-sm">¿Por qué nosotros?</h2>
+                <h3 class="text-4xl md:text-5xl font-display font-bold text-white">Diseñado para el Mundo Real</h3>
+                <p class="text-slate-400 max-w-2xl mx-auto">Nuestra metodología se enfoca en proyectos prácticos que
+                    puedes añadir a tu portafolio desde el primer día.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="glass p-8 rounded-3xl border border-white/5 hover:border-brand-500/30 transition-all group">
+                    <div
+                        class="w-14 h-14 bg-brand-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="cpu" class="text-brand-500 w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-display font-bold text-white mb-4">Currícula de Vanguardia</h4>
+                    <p class="text-slate-400 leading-relaxed">Contenido actualizado semanalmente con las últimas
+                        tendencias: LLMs, Generative AI y Agents.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="glass p-8 rounded-3xl border border-white/5 hover:border-blue-500/30 transition-all group">
+                    <div
+                        class="w-14 h-14 bg-blue-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="users" class="text-blue-500 w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-display font-bold text-white mb-4">Experiencia en Producción</h4>
+                    <p class="text-slate-400 leading-relaxed">De la arquitectura a la producción: Hemos construido soluciones de IA que hoy operan en grandes corporativos en Latam (Credicorp, Intercorp y más) y el mercado estadounidense.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="glass p-8 rounded-3xl border border-white/5 hover:border-green-500/30 transition-all group">
+                    <div
+                        class="w-14 h-14 bg-green-600/10 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="award" class="text-green-500 w-8 h-8"></i>
+                    </div>
+                    <h4 class="text-xl font-display font-bold text-white mb-4">Certificación Global</h4>
+                    <p class="text-slate-400 leading-relaxed">Al finalizar cada módulo, obtén un certificado verificado
+                        en la blockchain para LinkedIn.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Talleres Section -->
+    <section id="courses" class="py-24 bg-gradient-to-br from-[#5340f1] via-[#d042f8] to-[#e44a7b] relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="text-white text-5xl font-display font-extrabold mb-4 drop-shadow-sm">Talleres Intensivos de IA
+            </h2>
+            <p class="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-16 font-medium">Workshops prácticos y
+                rápidos para dominar las habilidades más demandadas en Inteligencia Artificial.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Workshop 1: Deep Learning Engineering -->
+                <div
+                    class="bg-white rounded-[24px] shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left flex flex-col overflow-hidden group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="assets/img/teacher_ml_1.png" alt="Instructor Deep Learning"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        
+                        <div class="absolute bottom-5 left-5 right-5 pointer-events-none">
+                            <h4 class="text-white text-lg font-display font-bold leading-tight">Deep
+                                Learning<br>Engineering</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <span
+                            class="inline-block bg-sky-100 text-sky-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3">ML
+                            Engineer</span>
+                        <h3 class="text-slate-800 text-lg font-bold leading-tight mb-2">Deep Learning Engineering</h3>
+                        <p class="text-slate-500 text-sm">Escalabilidad de modelos, pipelines de MLOps y producción avanzada de nivel empresarial.</p>
+                    </div>
+                    <div class="px-6 pb-6 flex items-center justify-between">
+                        <button onclick="openSyllabus('Deep Learning Engineering')"
+                            class="text-brand-600 font-bold hover:text-brand-800 transition-colors flex items-center gap-1 group/link text-sm">Ver
+                            más <i data-lucide="chevron-right"
+                                class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"></i></button>
+                        <span class="flex items-center gap-1.5 bg-indigo-50 text-indigo-600 text-[11px] font-bold px-3 py-1.5 rounded-full border border-indigo-100/50 uppercase tracking-wider">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                            12 hrs
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Workshop 2: LLM Fine-tuning & NLP -->
+                <div
+                    class="bg-white rounded-[24px] shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left flex flex-col overflow-hidden group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="assets/img/teacher_ml_2.png" alt="Instructor NLP"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        
+                        <div class="absolute bottom-5 left-5 right-5 pointer-events-none">
+                            <h4 class="text-white text-lg font-display font-bold leading-tight">NLP Masterclass<br>& LLM
+                                Fine-tuning</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <span
+                            class="inline-block bg-sky-100 text-sky-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3">ML
+                            Engineer</span>
+                        <h3 class="text-slate-800 text-lg font-bold leading-tight mb-2">LLM Fine-tuning & NLP</h3>
+                        <p class="text-slate-500 text-sm">Entrenamiento de modelos fundacionales con LoRA, QLoRA y arquitecturas RAG escalables.</p>
+                    </div>
+                    <div class="px-6 pb-6 flex items-center justify-between">
+                        <button onclick="openSyllabus('LLM Fine-tuning & NLP')"
+                            class="text-brand-600 font-bold hover:text-brand-800 transition-colors flex items-center gap-1 group/link text-sm">Ver
+                            más <i data-lucide="chevron-right"
+                                class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"></i></button>
+                        <span class="flex items-center gap-1.5 bg-indigo-50 text-indigo-600 text-[11px] font-bold px-3 py-1.5 rounded-full border border-indigo-100/50 uppercase tracking-wider">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                            16 hrs
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Workshop 3: AI Systems Architecture -->
+                <div
+                    class="bg-white rounded-[24px) shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left flex flex-col overflow-hidden group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="assets/img/teacher_ai_1.png" alt="Instructor AI Systems"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        
+                        <div class="absolute bottom-5 left-5 right-5 pointer-events-none">
+                            <h4 class="text-white text-lg font-display font-bold leading-tight">AI
+                                Systems<br>Architecture</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <span
+                            class="inline-block bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3">Architect</span>
+                        <h3 class="text-slate-800 text-lg font-bold leading-tight mb-2">AI Systems Architecture</h3>
+                        <p class="text-slate-500 text-sm">Diseño de infraestructuras de IA resilientes para grandes corporativos y startups.</p>
+                    </div>
+                    <div class="px-6 pb-6 flex items-center justify-between">
+                        <button onclick="openSyllabus('AI Systems Architecture')"
+                            class="text-brand-600 font-bold hover:text-brand-800 transition-colors flex items-center gap-1 group/link text-sm">Ver
+                            más <i data-lucide="chevron-right"
+                                class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"></i></button>
+                        <span class="flex items-center gap-1.5 bg-indigo-50 text-indigo-600 text-[11px] font-bold px-3 py-1.5 rounded-full border border-indigo-100/50 uppercase tracking-wider">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                            16 hrs
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Workshop 4: Agentes IA en Producción -->
+                <div
+                    class="bg-white rounded-[24px] shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left flex flex-col overflow-hidden group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="assets/img/teacher_agents_1.png" alt="Instructor Agentes IA"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        
+                        <div class="absolute bottom-5 left-5 right-5 pointer-events-none">
+                            <h4 class="text-white text-lg font-display font-bold leading-tight">Agentes IA<br>en
+                                Producción</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <span
+                            class="inline-block bg-orange-50 text-orange-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3">AI
+                            Engineer</span>
+                        <h3 class="text-slate-800 text-lg font-bold leading-tight mb-2">Diseño y Despliegue de Agentes
+                            IA</h3>
+                        <p class="text-slate-500 text-sm">Orquestación de agentes autónomos con LangGraph y CrewAI para flujos reales.</p>
+                    </div>
+                    <div class="px-6 pb-6 flex items-center justify-between">
+                        <button onclick="openSyllabus('Diseño y Despliegue de Agentes IA')"
+                            class="text-brand-600 font-bold hover:text-brand-800 transition-colors flex items-center gap-1 group/link text-sm">Ver
+                            más <i data-lucide="chevron-right"
+                                class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"></i></button>
+                        <span class="flex items-center gap-1.5 bg-indigo-50 text-indigo-600 text-[11px] font-bold px-3 py-1.5 rounded-full border border-indigo-100/50 uppercase tracking-wider">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                            12 hrs
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Workshop 5: Claude Code para Developers -->
+                <div
+                    class="bg-white rounded-[24px] shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left flex flex-col overflow-hidden group border-t-4 border-brand-500">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="assets/img/teacher_claude_1.png" alt="Instructor Claude Code"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        
+                        <div class="absolute bottom-5 left-5 right-5 pointer-events-none">
+                            <h4 class="text-white text-lg font-display font-bold leading-tight">Claude Code<br>para
+                                Developers</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <span
+                            class="inline-block bg-purple-50 text-purple-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3">Developer</span>
+                        <h3 class="text-slate-800 text-lg font-bold leading-tight mb-2">Claude Code para Developers</h3>
+                        <p class="text-slate-500 text-sm">Aumenta tu productividad x10 con Claude Code, APIs personalizadas y tooling avanzado.</p>
+                    </div>
+                    <div class="px-6 pb-6 flex items-center justify-between">
+                        <button onclick="openSyllabus('Claude Code para Developers')"
+                            class="text-brand-600 font-bold hover:text-brand-800 transition-colors flex items-center gap-1 group/link text-sm">Ver
+                            más <i data-lucide="chevron-right"
+                                class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"></i></button>
+                        <span class="flex items-center gap-1.5 bg-indigo-50 text-indigo-600 text-[11px] font-bold px-3 py-1.5 rounded-full border border-indigo-100/50 uppercase tracking-wider">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                            12 hrs
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Workshop 6: Modelos Generativos y Fundacionales -->
+                <div
+                    class="bg-white rounded-[24px] shadow-2xl hover:-translate-y-2 transition-all duration-300 text-left flex flex-col overflow-hidden group">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="assets/img/teacher_gen_1.png" alt="Instructor Modelos Generativos"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                        
+                        <div class="absolute bottom-5 left-5 right-5 pointer-events-none">
+                            <h4 class="text-white text-lg font-display font-bold leading-tight">Modelos Generativos<br>&
+                                Fundacionales</h4>
+                        </div>
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <span
+                            class="inline-block bg-purple-50 text-purple-600 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider mb-3">Senior</span>
+                        <h3 class="text-slate-800 text-lg font-bold leading-tight mb-2">Modelos Generativos y
+                            Fundacionales</h3>
+                        <p class="text-slate-500 text-sm">Deep dive en la arquitectura Transformer y el despliegue de modelos multimodales nativos.</p>
+                    </div>
+                    <div class="px-6 pb-6 flex items-center justify-between">
+                        <button onclick="openSyllabus('Modelos Generativos y Fundacionales')"
+                            class="text-brand-600 font-bold hover:text-brand-800 transition-colors flex items-center gap-1 group/link text-sm">Ver
+                            más <i data-lucide="chevron-right"
+                                class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"></i></button>
+                        <span class="flex items-center gap-1.5 bg-indigo-50 text-indigo-600 text-[11px] font-bold px-3 py-1.5 rounded-full border border-indigo-100/50 uppercase tracking-wider">
+                            <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                            12 hrs
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 flex items-center justify-center gap-4">
+                <button
+                    class="bg-white text-brand-600 px-8 py-4 rounded-xl font-bold shadow-xl hover:bg-slate-50 transition-all flex items-center gap-2">Explorar
+                    Todos los Talleres</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24 bg-dark-900 border-t border-white/5">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">Preguntas Frecuentes</h2>
+                <p class="text-slate-400">Todo lo que necesitas saber antes de empezar tu camino en la IA.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="glass rounded-2xl overflow-hidden border border-white/5">
+                    <button
+                        class="w-full p-6 text-left flex items-center justify-between hover:bg-white/5 transition-colors group"
+                        onclick="toggleFAQ(this)">
+                        <span class="font-bold text-white pr-8">¿Necesito experiencia previa en programación?</span>
+                        <i data-lucide="chevron-down"
+                            class="text-slate-500 group-[.active]:rotate-180 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden p-6 pt-0 text-slate-400 border-t border-white/5">
+                        <p>Para los cursos de ML Engineer, recomendamos conocimientos básicos de Python y álgebra
+                            lineal. Sin embargo, para nuestra ruta de "AI Mastery Essentials", empezamos desde los
+                            fundamentos absolutos.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="glass rounded-2xl overflow-hidden border border-white/5">
+                    <button
+                        class="w-full p-6 text-left flex items-center justify-between hover:bg-white/5 transition-colors group"
+                        onclick="toggleFAQ(this)">
+                        <span class="font-bold text-white pr-8">¿Recibo un certificado al finalizar?</span>
+                        <i data-lucide="chevron-down"
+                            class="text-slate-500 group-[.active]:rotate-180 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden p-6 pt-0 text-slate-400 border-t border-white/5">
+                        <p>Sí, cada curso incluye una certificación verificada en la blockchain que puedes compartir en
+                            LinkedIn. Es reconocida mundialmente por su rigor técnico.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="glass rounded-2xl overflow-hidden border border-white/5">
+                    <button
+                        class="w-full p-6 text-left flex items-center justify-between hover:bg-white/5 transition-colors group"
+                        onclick="toggleFAQ(this)">
+                        <span class="font-bold text-white pr-8">¿Cuánto tiempo tengo para completar el curso?</span>
+                        <i data-lucide="chevron-down"
+                            class="text-slate-500 group-[.active]:rotate-180 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden p-6 pt-0 text-slate-400 border-t border-white/5">
+                        <p>Una vez inscrito, tienes acceso de por vida al material. Aunque cada ruta está diseñada para
+                            completarse en 10-14 semanas con una dedicación de 5-8 horas semanales.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="glass rounded-2xl overflow-hidden border border-white/5">
+                    <button
+                        class="w-full p-6 text-left flex items-center justify-between hover:bg-white/5 transition-colors group"
+                        onclick="toggleFAQ(this)">
+                        <span class="font-bold text-white pr-8">¿Hay tutorías personalizadas?</span>
+                        <i data-lucide="chevron-down"
+                            class="text-slate-500 group-[.active]:rotate-180 transition-transform"></i>
+                    </button>
+                    <div class="faq-content hidden p-6 pt-0 text-slate-400 border-t border-white/5">
+                        <p>Sí, todos nuestros programas incluyen acceso a sesiones semanales en vivo de Q&A con mentores
+                            expertos y un canal de Discord privado 24/7.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal for Syllabus Roadmap -->
+    <div id="syllabusModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+        <div class="glass max-w-2xl w-full rounded-[32px] overflow-hidden border border-white/10 shadow-3xl animate-in zoom-in duration-300">
+            <div class="p-8 md:p-12 relative">
+                <button onclick="closeSyllabus()" class="absolute top-8 right-8 text-slate-400 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+                
+                <h3 id="modalTitle" class="text-3xl font-display font-extrabold text-white mb-6 leading-tight"></h3>
+                
+                <div class="space-y-8">
+                    <div id="modalBody" class="space-y-6">
+                        <!-- Content will be injected by JavaScript -->
+                    </div>
+
+                    <div class="pt-8 border-t border-white/10">
+                        <a href="#register" onclick="closeSyllabus()" class="inline-flex items-center justify-center w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-4 rounded-2xl transition-all shadow-xl shadow-brand-500/20 active:scale-95 gap-2">
+                            Reservar mi cupo <i data-lucide="zap" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Section -->
+    <section id="register" class="py-24 relative overflow-hidden bg-dark-800">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10">
+        </div>
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <div class="glass p-8 md:p-12 rounded-[40px] border border-white/10 shadow-3xl">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">Regístrate a la Masterclass
+                        Gratis</h2>
+                    <p class="text-slate-400">Cupos limitados. Asegura tu lugar y recibe de regalo nuestro E-book.</p>
+                </div>
+
+                <form id="registrationForm" novalidate class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label for="firstName" class="text-sm font-medium text-slate-300 ml-1">Nombre
+                                Completo</label>
+                            <input type="text" id="firstName" name="firstName" required minlength="3" maxlength="40"
+                                placeholder="Ej. Juan Pérez"
+                                class="w-full bg-dark-900 border border-white/10 rounded-2xl p-4 text-white focus:border-brand-500 transition-all placeholder:text-slate-600">
+                            <span class="error-message">Por favor ingresa tu nombre.</span>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="email" class="text-sm font-medium text-slate-300 ml-1">Correo
+                                Electrónico</label>
+                            <input type="email" id="email" name="email" required placeholder="tu@email.com"
+                                class="w-full bg-dark-900 border border-white/10 rounded-2xl p-4 text-white focus:border-brand-500 transition-all placeholder:text-slate-600">
+                            <span class="error-message">Ingresa un correo válido.</span>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="whatsapp" class="text-sm font-medium text-slate-300 ml-1">WhatsApp</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" required placeholder="+51 987 654 321"
+                                class="w-full bg-dark-900 border border-white/10 rounded-2xl p-4 text-white focus:border-brand-500 transition-all placeholder:text-slate-600">
+                            <span class="error-message">Ingresa tu número de WhatsApp.</span>
+                        </div>
+                        <div class="space-y-2">
+                            <label for="interest" class="text-sm font-medium text-slate-300 ml-1">Área de
+                                Interés</label>
+                            <select id="interest" name="interest" required
+                                class="w-full bg-dark-900 border border-white/10 rounded-2xl p-4 text-white focus:border-brand-500 transition-all appearance-none">
+                                <option value="">Selecciona una opción</option>
+                                <option value="deep_learning">Deep Learning Engineering</option>
+                                <option value="llm_nlp">LLM Fine-tuning & NLP</option>
+                                <option value="ai_systems">AI Systems Architecture</option>
+                                <option value="ai_agents">Agentes IA en Producción</option>
+                                <option value="claude_code">Claude Code para Developers</option>
+                                <option value="gen_ai">Modelos Generativos y Fundacionales</option>
+                            </select>
+                            <span class="error-message">Selecciona un área.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 pt-2">
+                        <div class="flex flex-col space-y-1">
+                            <div class="flex items-start space-x-3">
+                                <input type="checkbox" id="data_auth" name="data_auth" required
+                                    class="mt-1 accent-brand-500 w-4 h-4">
+                                <label for="data_auth" class="text-sm text-slate-400">Autorizo el uso de mi información
+                                    para fines académicos y promocionales de Magis AI Academy.</label>
+                            </div>
+                            <span id="authError" class="error-message">Debes autorizar el uso de datos para
+                                continuar.</span>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-5 rounded-2xl text-lg shadow-xl shadow-brand-600/40 transition-all hover:scale-[1.02] active:scale-[0.98] mt-4">
+                        Reservar Mi Lugar Ahora
+                    </button>
+
+                    <p class="text-center text-xs text-slate-500 mt-6">
+                        <i data-lucide="shield-check" class="inline w-3 h-3 mr-1"></i> No compartimos tus datos con
+                        terceros. Puedes darte de baja en cualquier momento.
+                    </p>
+                </form>
+
+                <!-- Success Message (Hidden by default) -->
+                <div id="successMessage" class="hidden text-center py-8">
+                    <div
+                        class="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6 transform scale-110 animate-bounce">
+                        <i data-lucide="check-circle" class="text-green-500 w-10 h-10"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">¡Inscripción Exitosa!</h3>
+                    <p class="text-slate-400">Revisa tu correo para confirmar tu asistencia y descargar tu E-book.</p>
+                </div>
+                
+                <!-- Error Message (Hidden by default) -->
+                <div id="errorMessage" class="hidden text-center py-4 px-6 mt-4 bg-red-500/10 border border-red-500/20 rounded-2xl">
+                    <h4 class="text-lg font-bold text-red-500 mb-1">Hubo un problema</h4>
+                    <p id="errorText" class="text-red-400 text-sm"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-dark-900 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center space-x-2 mb-8">
+                <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center">
+                    <i data-lucide="zap" class="text-white w-5 h-5"></i>
+                </div>
+                <span class="text-lg font-display font-bold text-white uppercase tracking-tighter">Magis AI
+                    Academy</span>
+            </div>
+            <div class="flex justify-center space-x-6 mb-8 text-slate-400">
+                <a href="#" class="hover:text-white transition-colors"><i data-lucide="twitter"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i data-lucide="linkedin"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i data-lucide="github"></i></a>
+            </div>
+            <p class="text-slate-500 text-sm">© 2026 AI Mastery Inc. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Form Validation Logic
+        const form = document.getElementById('registrationForm');
+        const successMessage = document.getElementById('successMessage');
+
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let isValid = true;
+            const inputs = form.querySelectorAll('input[required], select[required]');
+
+            inputs.forEach(input => {
+                if (input.type === 'checkbox') {
+                    const errorSpan = document.getElementById('termsError');
+                    if (!input.checked) {
+                        isValid = false;
+                        errorSpan.classList.add('block');
+                        errorSpan.classList.remove('hidden');
+                        input.parentElement.classList.add('text-red-500');
+                    } else {
+                        errorSpan.classList.add('hidden');
+                        errorSpan.classList.remove('block');
+                        input.parentElement.classList.remove('text-red-500');
+                    }
+                } else {
+                    if (!input.checkValidity()) {
+                        isValid = false;
+                        input.classList.add('invalid');
+                    } else {
+                        input.classList.remove('invalid');
+                    }
+                }
+            });
+
+            if (isValid) {
+                // Real API call to Vercel Serverless Function
+                form.classList.add('opacity-50', 'pointer-events-none');
+                errorMessage.classList.add('hidden');
+
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+
+                fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                })
+                    .then(async response => {
+                        const result = await response.json();
+                        if (!response.ok) throw new Error(result.error || 'Error desconocido del servidor');
+                        return result;
+                    })
+                    .then(result => {
+                        form.classList.add('hidden');
+                        successMessage.classList.remove('hidden');
+                        successMessage.classList.add('animate-in', 'fade-in', 'zoom-in', 'duration-500');
+                        console.log('Success:', result);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        errorText.textContent = error.message;
+                        errorMessage.classList.remove('hidden');
+                        form.classList.remove('opacity-50', 'pointer-events-none');
+                    });
+            }
+        });
+
+        // Clear error on input
+        form.querySelectorAll('input, select').forEach(input => {
+            input.addEventListener('input', () => {
+                input.classList.remove('invalid');
+            });
+        });
+
+        // FAQ Toggle
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+
+            // Close other items (optional based on UX preference)
+            document.querySelectorAll('.faq-content').forEach(other => {
+                if (other !== content) {
+                    other.classList.add('hidden');
+                    other.previousElementSibling.classList.remove('active');
+                }
+            });
+
+            content.classList.toggle('hidden');
+            button.classList.toggle('active');
+        }
+
+        // Syllabus Modal Data
+        const syllabusData = {
+            'Deep Learning Engineering': {
+                sumilla: 'Taller práctico donde los participantes entrenarán, optimizarán y desplegarán un modelo de deep learning listo para producción. Se trabajará sobre un caso real, cubriendo desde el entrenamiento hasta su exposición como API.',
+                resultado: 'Modelo entrenado + API desplegada',
+                handsOn: [
+                    'Entrenamiento de modelo (PyTorch/TensorFlow)',
+                    'Ajuste de hiperparámetros',
+                    'Exportación del modelo',
+                    'Deployment con FastAPI o similar'
+                ],
+                requisitos: 'Python, Machine Learning',
+                horas: 12
+            },
+            'LLM Fine-tuning & NLP': {
+                sumilla: 'Taller enfocado en personalizar un modelo de lenguaje y construir una aplicación basada en RAG. Los participantes implementarán un chatbot conectado a datos propios.',
+                resultado: 'Chatbot con RAG funcionando',
+                handsOn: [
+                    'Prompt engineering',
+                    'Fine-tuning con LoRA/QLoRA',
+                    'Indexación de documentos',
+                    'Construcción de pipeline RAG'
+                ],
+                requisitos: 'Python, Machine Learning',
+                horas: 16
+            },
+            'AI Systems Architecture': {
+                sumilla: 'Taller práctico para diseñar la arquitectura de un sistema de IA listo para producción. Se trabajará sobre un caso empresarial real, definiendo componentes, flujos de datos y decisiones tecnológicas.',
+                resultado: 'Arquitectura completa documentada + diagrama',
+                handsOn: [
+                    'Diseño de arquitectura end-to-end',
+                    'Selección de tecnologías (cloud, APIs, DBs)',
+                    'Definición de escalabilidad y resiliencia',
+                    'Buenas prácticas de AI en producción'
+                ],
+                requisitos: 'Conocimientos básicos de Arquitectura de Software',
+                horas: 16
+            },
+            'Diseño y Despliegue de Agentes IA': {
+                sumilla: 'Taller donde se construyen agentes autónomos capaces de ejecutar tareas complejas. Se implementará un flujo multi-agente conectado a herramientas externas.',
+                resultado: 'Agente funcional ejecutando tareas reales',
+                handsOn: [
+                    'Creación de agentes con LangGraph/CrewAI',
+                    'Integración con APIs/tools',
+                    'Memoria y planificación',
+                    'Orquestación de múltiples agentes'
+                ],
+                requisitos: 'Python',
+                horas: 12
+            },
+            'Claude Code para Developers': {
+                sumilla: 'Taller intensivo para aprender a usar IA como copiloto de desarrollo. Los participantes construirán una aplicación completa acelerando su desarrollo con herramientas AI.',
+                resultado: 'App funcional desarrollada con AI',
+                handsOn: [
+                    'Generación de código asistido',
+                    'Refactorización automática',
+                    'Integración con APIs',
+                    'Debugging con IA',
+                    'Spec Driven Development'
+                ],
+                requisitos: 'Experiencia en desarrollo de software',
+                horas: 12
+            },
+            'Modelos Generativos y Fundacionales': {
+                sumilla: 'Taller práctico donde se exploran modelos generativos mediante implementación directa. Se trabajará con modelos preentrenados para generar texto, imágenes o contenido multimodal.',
+                resultado: 'Aplicación generativa funcional',
+                handsOn: [
+                    'Uso de APIs de modelos generativos',
+                    'Generación de contenido (texto/imágenes)',
+                    'Ajuste de parámetros (temperature, etc.)',
+                    'Integración en una app'
+                ],
+                requisitos: 'Python básico',
+                horas: 12
+            }
+        };
+
+        const modal = document.getElementById('syllabusModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+
+        function openSyllabus(courseName) {
+            const data = syllabusData[courseName];
+            if (!data) return;
+
+            modalTitle.innerHTML = `<span class="text-brand-500">${courseName}</span>`;
+            modalBody.innerHTML = `
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-brand-400 font-bold text-sm uppercase mb-2">Sumilla</h4>
+                        <p class="text-slate-300 leading-relaxed">${data.sumilla}</p>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-green-400 font-bold text-sm uppercase mb-2">Resultado</h4>
+                        <div class="flex items-center gap-2 text-white font-bold bg-white/5 p-3 rounded-xl border border-white/10">
+                            <i data-lucide="trophy" class="w-5 h-5 text-yellow-500"></i>
+                            ${data.resultado}
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-brand-400 font-bold text-sm uppercase mb-2">Hands-on</h4>
+                        <div class="grid grid-cols-1 gap-3">
+                            ${data.handsOn.map(item => `
+                                <div class="flex items-start space-x-3 text-slate-300">
+                                    <div class="bg-brand-500/20 p-1 rounded mt-1">
+                                        <i data-lucide="check" class="text-brand-500 w-3 h-3"></i>
+                                    </div>
+                                    <span class="text-sm">${item}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    ${data.requisitos ? `
+                    <div class="flex items-center gap-4 bg-slate-800/50 p-4 rounded-2xl border border-white/5">
+                        <div class="text-slate-400 text-xs uppercase font-bold">Requisitos:</div>
+                        <div class="text-slate-200 text-sm font-medium">${data.requisitos}</div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            lucide.createIcons(); // To initialize the check icons in the modal
+        }
+
+        function closeSyllabus() {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Close modal on escape or click outside
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSyllabus();
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeSyllabus();
+        });
+
+
+        </script>
+</body>
+
+</html>
