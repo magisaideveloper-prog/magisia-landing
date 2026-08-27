@@ -58,14 +58,13 @@ const email =
           'Authorization': `Bearer ${process.env.SUPABASE_SECRET_KEY}`,
           'Prefer': 'return=representation'
         },
-        body: JSON.stringify({
-  nombre: nombre,
+       body: JSON.stringify({
+  nombre: firstname,
   email: email,
-  whatsapp: whatsapp,
-  interes: interest,
-  data_auth: dataAuth
-})
-      }
+  whatsapp: whatsapp || null,
+  interes: interest || null,
+  data_auth: data_auth || false
+})  
     );
 
     const data = await response.json();
