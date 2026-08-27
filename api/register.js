@@ -6,24 +6,43 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('DATOS RECIBIDOS:', req.body);
+    console.log('DATOS RECIBIDOS:', JSON.stringify(req.body));
 
-    // Nombres EXACTOS que envía tu formulario
-    const firstname = req.body.firstname;
-    const email = req.body.email;
-    const whatsapp = req.body.whatsapp;
-    const interest = req.body.interest;
-    const data_auth = req.body.data_auth;
+    // Aceptar exactamente las variantes posibles
+    const nombre =
+      req.body.firstName ||
+      req.body.firstname ||
+      req.body.nombre;
 
-    // Validar solamente nombre y correo
-    if (!firstname || !email) {
+    const email =
+      req.body.email;
+
+    const whatsapp =
+      req.body.whatsapp || null;
+
+    const interes =
+      req.body.interest ||
+      req.body.interes ||
+      null;
+
+    const data_auth =
+      req.body.data_auth === 'on' ||
+      req.body.data_auth === true;
+
+    // VALIDACIÓN
+    if (!nombre || !email) {
+      console.log('FALTAN:', {
+        nombre,
+        email,
+        body: req.body
+      });
+
       return res.status(400).json({
         error: 'Faltan campos obligatorios',
         recibido: req.body
       });
     }
 
-    // Enviar datos a Supabase
     const response = await fetch(
       `${process.env.SUPABASE_URL}/rest/v1/leads`,
       {
@@ -35,11 +54,11 @@ export default async function handler(req, res) {
           'Prefer': 'return=representation'
         },
         body: JSON.stringify({
-          nombre: firstname,
+          nombre: nombre,
           email: email,
-          whatsapp: whatsapp || null,
-          interest: interest || null,
-          data_auth: data_auth === 'on' || data_auth === true
+          whatsapp: whatsapp,
+          interest: interes,
+          data_auth: data_auth
         })
       }
     );
@@ -50,7 +69,7 @@ export default async function handler(req, res) {
       console.error('ERROR SUPABASE:', result);
 
       return res.status(response.status).json({
-        error: result.message || result.error || JSON.stringify(result)
+        error: result.message || JSON.stringify(result)
       });
     }
 
@@ -60,10 +79,10 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error('ERROR SERVIDOR:', error);
+    console.error('ERROR:', error);
 
     return res.status(500).json({
-      error: error.message || 'Error interno del servidor'
+      error: error.message
     });
   }
 }
