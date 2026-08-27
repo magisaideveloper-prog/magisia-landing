@@ -684,7 +684,7 @@
 
             inputs.forEach(input => {
                 if (input.type === 'checkbox') {
-                    const errorSpan = document.getElementById('termsError');
+                    const errorSpan = document.getElementById('authError');
                     if (!input.checked) {
                         isValid = false;
                         errorSpan.classList.add('block');
