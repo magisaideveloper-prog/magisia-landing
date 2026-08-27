@@ -6,40 +6,28 @@ export default async function handler(req, res) {
   }
 
   try {
-    console.log('DATOS RECIBIDOS:', JSON.stringify(req.body));
+    const body = req.body || {};
 
-    // Aceptar exactamente las variantes posibles
-    const nombre =
-      req.body.firstName ||
-      req.body.firstname ||
-      req.body.nombre;
+    // Datos exactos del formulario
+    const nombre = body.firstName || body.firstname || body.nombre || '';
+    const email = body.email || '';
+    const whatsapp = body.whatsapp || '';
+    const interes = body.interest || body.interes || '';
+    const dataAuth =
+      body.data_auth === 'on' ||
+      body.data_auth === true;
 
-    const email =
-      req.body.email;
+    console.log({
+      nombre,
+      email,
+      whatsapp,
+      interes,
+      dataAuth
+    });
 
-    const whatsapp =
-      req.body.whatsapp || null;
-
-    const interes =
-      req.body.interest ||
-      req.body.interes ||
-      null;
-
-    const data_auth =
-      req.body.data_auth === 'on' ||
-      req.body.data_auth === true;
-
-    // VALIDACIÓN
     if (!nombre || !email) {
-      console.log('FALTAN:', {
-        nombre,
-        email,
-        body: req.body
-      });
-
       return res.status(400).json({
-        error: 'Faltan campos obligatorios',
-        recibido: req.body
+        error: 'Faltan campos obligatorios'
       });
     }
 
@@ -56,9 +44,9 @@ export default async function handler(req, res) {
         body: JSON.stringify({
           nombre: nombre,
           email: email,
-          whatsapp: whatsapp,
-          interest: interes,
-          data_auth: data_auth
+          whatsapp: whatsapp || null,
+          interest: interes || null,
+          data_auth: dataAuth
         })
       }
     );
@@ -66,10 +54,10 @@ export default async function handler(req, res) {
     const result = await response.json();
 
     if (!response.ok) {
-      console.error('ERROR SUPABASE:', result);
+      console.error('SUPABASE ERROR:', result);
 
       return res.status(response.status).json({
-        error: result.message || JSON.stringify(result)
+        error: result.message || result.error || 'Error al guardar'
       });
     }
 
@@ -79,10 +67,10 @@ export default async function handler(req, res) {
     });
 
   } catch (error) {
-    console.error('ERROR:', error);
+    console.error('SERVER ERROR:', error);
 
     return res.status(500).json({
-      error: error.message
+      error: error.message || 'Error interno del servidor'
     });
   }
 }
