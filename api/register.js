@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // Solo aceptar POST
   if (req.method !== 'POST') {
     return res.status(405).json({
       error: 'Método no permitido'
@@ -7,47 +6,22 @@ export default async function handler(req, res) {
   }
 
   try {
+    const {
+      firstname,
+      email,
+      whatsapp,
+      interest,
+      data_auth
+    } = req.body;
+
     console.log('Datos recibidos:', req.body);
 
-    // Aceptar diferentes nombres posibles enviados por el formulario
-    const nombre =
-  req.body.firstName ||
-  req.body.name ||
-  req.body.nombre ||
-  req.body.full_name ||
-  req.body.fullName;
-
-const email =
-  req.body.email ||
-  req.body.correo ||
-  req.body.correo_electronico;
-
-    const whatsapp =
-      req.body.whatsapp ||
-      req.body.WhatsApp ||
-      req.body.telefono ||
-      null;
-
-    const interes =
-      req.body.interes ||
-      req.body['Área de Interés'] ||
-      req.body.areaInteres ||
-      null;
-
-    const autorizacion =
-      req.body.autorizacion ||
-      req.body.data_auth ||
-      false;
-
-    // Validar
-    if (!nombre || !email) {
+    if (!firstname || !email) {
       return res.status(400).json({
-        error: 'Faltan campos obligatorios',
-        recibido: req.body
+        error: 'Faltan campos obligatorios'
       });
     }
 
-    // Guardar en Supabase
     const response = await fetch(
       `${process.env.SUPABASE_URL}/rest/v1/leads`,
       {
@@ -58,13 +32,14 @@ const email =
           'Authorization': `Bearer ${process.env.SUPABASE_SECRET_KEY}`,
           'Prefer': 'return=representation'
         },
-       body: JSON.stringify({
-  nombre: firstname,
-  email: email,
-  whatsapp: whatsapp || null,
-  interes: interest || null,
-  data_auth: data_auth || false
-})  
+        body: JSON.stringify({
+          nombre: firstname,
+          email: email,
+          whatsapp: whatsapp || null,
+          interes: interest || null,
+          data_auth: data_auth || false
+        })
+      }
     );
 
     const data = await response.json();
@@ -73,24 +48,21 @@ const email =
       console.error('Error Supabase:', data);
 
       return res.status(response.status).json({
-        error:
-          data.message ||
-          data.error ||
-          'Error al guardar el registro'
+        error: data.message || data.error || 'Error al guardar'
       });
     }
 
     return res.status(200).json({
       success: true,
       message: 'Registro guardado correctamente',
-      data: data
+      data
     });
 
   } catch (error) {
     console.error('Error:', error);
 
     return res.status(500).json({
-      error: 'Error interno del servidor'
+      error: error.message || 'Error interno del servidor'
     });
   }
 }
